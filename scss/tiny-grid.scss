@@ -1,0 +1,91 @@
+$grid-container-max-width: 1470px !default;
+$grid-columns: 12 !default;
+$grid-gutter: 1.875rem !default;
+
+$grid-breakpoints: (
+	xs: 375px,
+	sm: 640px,
+	md: 768px,
+	lg: 1025px,
+	xl: 1200px
+) !default;
+
+@mixin clearfix() {
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+
+@mixin col-width($size) {
+	.col-#{$size} {
+		width: ((100% / $grid-columns) * $size);
+	}
+	.col-offset-#{$size} {
+		margin-left: ((100% / $grid-columns) * $size);
+	}
+}
+
+@mixin col-breakpoint-width($name, $size) {
+	.col-#{$name}-#{$size} {
+		width: ((100% / $grid-columns) * $size);
+	}
+	.col-#{$name}-offset-#{$size} {
+		margin-left: ((100% / $grid-columns) * $size);
+	}
+}
+
+%container-base {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	padding-left: ($grid-gutter / 2);
+	padding-right: ($grid-gutter / 2);
+	box-sizing: border-box;
+	@include clearfix();
+}
+
+.container {
+	@extend %container-base;
+	max-width: $grid-container-max-width;
+}
+
+.container-fluid {
+	@extend %container-base;
+}
+
+.row {
+	margin-left: ($grid-gutter / -2);
+	margin-right: ($grid-gutter / -2);
+	box-sizing: border-box;
+	@include clearfix();
+}
+
+[class*="col-"] {
+	position: relative;
+	width: 100%;
+	float: left;
+	padding-left: ($grid-gutter / 2);
+	padding-right: ($grid-gutter / 2);
+	box-sizing: border-box;
+	min-height: 1px;
+}
+
+/* Create non-breakpoint specific columns */
+@for $i from 1 through $grid-columns {
+	@include col-width($i);
+}
+
+/* Create breakpoint specific columns */
+@each $breakpoint-name in map-keys($grid-breakpoints) {
+	/* Get each key's value */
+	$breakpoint-width: map-get($grid-breakpoints, $breakpoint-name);
+	/* Create media query for each breakpoint */
+	@media (min-width: $breakpoint-width) {
+		/* Add width of each col in this breakpoint */
+		@for $i from 1 through $grid-columns {
+			@include col-breakpoint-width($breakpoint-name, $i);
+		}
+	}
+}
