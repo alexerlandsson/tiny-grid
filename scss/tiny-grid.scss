@@ -1,3 +1,12 @@
+/*
+ * Tiny Grid by @alexerlandsson
+ * https://alexerlandsson.com
+ *
+ * This is a CSS grid system used to build responsive websites
+ * and applications. For documentation, check out the GitHub repository:
+ * https://github.com/alexerlandsson/tiny-grid
+ */
+
 @mixin clearfix() {
 	&:after {
 		content: "";
@@ -7,6 +16,9 @@
 }
 
 @mixin tiny-grid() {
+
+	/* Settings */
+
 	$grid-container-max-width: 1470px !default;
 	$grid-columns: 12 !default;
 	$grid-gutter: 1.875rem !default;
@@ -18,6 +30,8 @@
 		lg: 1025px,
 		xl: 1200px
 	) !default;
+
+	/* Container Elements */
 
 	%container-base {
 		margin-left: auto;
@@ -44,6 +58,8 @@
 		box-sizing: border-box;
 		@include clearfix();
 	}
+
+	/* Columns */
 
 	[class*="col-"] {
 		position: relative;
