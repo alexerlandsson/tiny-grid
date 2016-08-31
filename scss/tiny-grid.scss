@@ -61,7 +61,8 @@
 
 	/* Columns */
 
-	[class*="col-"] {
+	[class*=" col-"],
+	[class^="col-"] {
 		position: relative;
 		width: 100%;
 		float: left;
