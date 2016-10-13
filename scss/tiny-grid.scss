@@ -77,6 +77,9 @@
 		.col-#{$i} {
 			width: ((100% / $grid-columns) * $i);
 		}
+	}
+	/* Create non-breakpoint specific column offsets */
+	@for $i from 0 through $grid-columns {
 		.col-offset-#{$i} {
 			margin-left: ((100% / $grid-columns) * $i);
 		}
@@ -88,11 +91,14 @@
 		$breakpoint-width: map-get($grid-breakpoints, $breakpoint-name);
 		/* Create media query for each breakpoint */
 		@media (min-width: $breakpoint-width) {
-			/* Add width of each col in this breakpoint */
+			/* Create columns for each size in this breakpoint */
 			@for $i from 1 through $grid-columns {
 				.col-#{$breakpoint-name}-#{$i} {
 					width: ((100% / $grid-columns) * $i);
 				}
+			}
+			/* Create column offsets for each size in this breakpoint */
+			@for $i from 0 through $grid-columns {
 				.col-#{$breakpoint-name}-offset-#{$i} {
 					margin-left: ((100% / $grid-columns) * $i);
 				}
