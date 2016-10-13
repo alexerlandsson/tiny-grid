@@ -72,7 +72,7 @@
 		min-height: 1px;
 	}
 
-	/* Create non-breakpoint specific columns */
+	/* Create non-breakpoint specific columns and column offsets */
 	@for $i from 1 through $grid-columns {
 		.col-#{$i} {
 			width: ((100% / $grid-columns) * $i);
