@@ -7,14 +7,6 @@
  * https://github.com/alexerlandsson/tiny-grid
  */
 
-@mixin clearfix() {
-	&:after {
-		content: "";
-		display: table;
-		clear: both;
-	}
-}
-
 @mixin tiny-grid() {
 
 	/* Settings */
@@ -40,7 +32,11 @@
 		padding-left: $grid-gutter;
 		padding-right: $grid-gutter;
 		box-sizing: border-box;
-		@include clearfix();
+		&:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
 	}
 
 	.container {
@@ -56,7 +52,11 @@
 		margin-left: ($grid-gutter / -2);
 		margin-right: ($grid-gutter / -2);
 		box-sizing: border-box;
-		@include clearfix();
+		&:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
 	}
 
 	/* Columns */
