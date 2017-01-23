@@ -7,7 +7,7 @@
 
 // ===== Mixins =====
 
-@mixin clearfix {
+@mixin tg-clearfix {
   &:after {
     content: "";
     display: table;
@@ -76,7 +76,7 @@
   // Container Elements
 
   %container-base {
-    @include clearfix;
+    @include tg-clearfix;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
@@ -95,7 +95,7 @@
   }
 
   .row {
-    @include clearfix;
+    @include tg-clearfix;
     margin-left: ($grid-gutter / -2);
     margin-right: ($grid-gutter / -2);
     box-sizing: border-box;
@@ -122,8 +122,6 @@
       [class*=" col-"] {
         @include tg-flex(0 0 auto);
         @include tg-flex-grow(1);
-        @include tg-flex-basis(100%);
-        max-width: 100%;
       }
     }
   }
@@ -133,12 +131,13 @@
   [class^="col-"],
   [class*=" col-"] {
     width: 100%;
+    min-height: 1px;
     float: left;
     padding-left: ($grid-gutter / 2);
     padding-right: ($grid-gutter / 2);
     box-sizing: border-box;
-    @if $enable-flex == false {
-      min-height: 1px;
+    @if $enable-flex {
+      @include tg-flex-basis(100%);
     }
   }
 
@@ -146,12 +145,8 @@
   @for $i from 1 through $grid-columns {
     .col-#{$i} {
       width: ((100% / $grid-columns) * $i);
-
       @if $enable-flex {
-        .flex-row & {
-          @include tg-flex-basis(((100% / $grid-columns) * $i));
-          max-width: ((100% / $grid-columns) * $i);
-        }
+        @include tg-flex-basis(((100% / $grid-columns) * $i));
       }
     }
     .col-offset-#{$i} {
@@ -175,12 +170,8 @@
       @for $i from 1 through $grid-columns {
         .col-#{$breakpoint-name}-#{$i} {
           width: ((100% / $grid-columns) * $i);
-
           @if $enable-flex {
-            .flex-row & {
-              @include tg-flex-basis(((100% / $grid-columns) * $i));
-              max-width: ((100% / $grid-columns) * $i);
-            }
+            @include tg-flex-basis(((100% / $grid-columns) * $i));
           }
         }
         .col-#{$breakpoint-name}-offset-#{$i} {
