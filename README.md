@@ -1,5 +1,5 @@
 # Tiny Grid
-This is a lightweight CSS grid framework used to build responsive websites and applications. With just a size of 4.8KB minified (1.2KB gzipped), it is hard to find a smaller framework with the same possibilities.
+This is a lightweight CSS grid framework used to build responsive websites and applications. With just a size of 5KB minified (1.2KB gzipped), it is hard to find a smaller framework with the same possibilities.
 
 ## Quick Start
 To use Tiny Grid in your project, download the CSS file `tiny-grid.min.css` located in the folder name css and include it in the head of you html page.
