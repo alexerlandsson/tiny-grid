@@ -103,7 +103,6 @@
     @if $enable-flex {
       [class^="col-"],
       [class*=" col-"] {
-        float: left;
         min-height: 1px;
       }
     }
@@ -134,11 +133,11 @@
   [class^="col-"],
   [class*=" col-"] {
     width: 100%;
+    float: left;
     padding-left: ($grid-gutter / 2);
     padding-right: ($grid-gutter / 2);
     box-sizing: border-box;
     @if $enable-flex == false {
-      float: left;
       min-height: 1px;
     }
   }
