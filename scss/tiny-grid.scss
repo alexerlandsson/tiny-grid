@@ -155,9 +155,7 @@
   }
 
   // Create breakpoint specific columns
-  @each $breakpoint-name in map-keys($grid-breakpoints) {
-    // Get each key's value
-    $breakpoint-width: map-get($grid-breakpoints, $breakpoint-name);
+  @each $breakpoint-name, $breakpoint-width in $grid-breakpoints {
 
     // Create media query for each breakpoint
     @media (min-width: $breakpoint-width) {
