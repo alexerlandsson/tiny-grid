@@ -37,7 +37,7 @@ Rows should always wrap columns. This div contains negative margin to remove the
 ### Columns
 Breakpoint columns defines the width of the column in a certain breakpoint and up. Note that this frameworks uses `min-width` in the media queries.
 
-The breakpoints could be defined in the `$grid-breakpoints` map. As default, Tiny Grid comes with the breakpoints `xs`, `sm`, `md`, `lg` and `xl`.
+The breakpoints could be defined in the `$grid-breakpoints` map. As default, Tiny Grid comes with the breakpoints `sm`, `md`, `lg` and `xl`.
 
 As default, the grid system builds on a 12-column system. This could easily be changed by changing the `$grid-columns` variable to desired value.
 

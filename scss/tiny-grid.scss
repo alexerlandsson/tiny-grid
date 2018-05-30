@@ -7,50 +7,46 @@
 
 // ===== Mixins =====
 
-@mixin tg-clearfix {
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
+@mixin tg-flex-display {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@mixin tg-flex($flex: 1) {
+  -webkit-flex: $flex;
+      -ms-flex: $flex;
+          flex: $flex;
+}
+
+@mixin --tg-flex-direction-prefixes($direction) {
+  @if $direction == row {
+    -webkit-box-direction: normal;
+       -webkit-box-orient: horizontal;
+  } @else if $direction == row-reverse {
+    -webkit-box-direction: reverse;
+       -webkit-box-orient: horizontal;
+  } @else if $direction == column {
+    -webkit-box-direction: normal;
+       -webkit-box-orient: vertical;
+  } @else if $direction == column-reverse {
+    -webkit-box-direction: reverse;
+       -webkit-box-orient: vertical;
+  } @else {
+    -webkit-box-direction: normal;
+       -webkit-box-orient: $direction;
   }
 }
 
-@mixin tg-flex-display($display: flex) {
-  display: -webkit-#{$display};
-  display: -moz-#{$display};
-  display: -ms-#{$display}box;
-  display: -ms-#{$display};
-  display: $display;
-}
-
-@mixin tg-flex($value) {
-  -webkit-flex: $value;
-      -ms-flex: $value;
-          flex: $value;
-}
-
 @mixin tg-flex-direction($direction: row) {
-  -webkit-flex-direction: $direction;
-      -ms-flex-direction: $direction;
-          flex-direction: $direction;
+  @include --tg-flex-direction-prefixes($direction);
+  -ms-flex-direction: $direction;
+      flex-direction: $direction;
 }
 
-@mixin tg-flex-wrap($wrap: wrap) {
-  -webkit-flex-wrap: $wrap;
-      -ms-flex-wrap: $wrap;
-          flex-wrap: $wrap;
-}
-
-@mixin tg-flex-grow($grow: 1) {
-  -webkit-flex-grow: $grow;
-      -ms-flex-grow: $grow;
-          flex-grow: $grow;
-}
-
-@mixin tg-flex-basis($width: 0) {
-  -webkit-flex-basis: $width;
-      -ms-flex-basis: $width;
-          flex-basis: $width;
+@mixin tg-flex-wrap($wrap: nowrap) {
+  -ms-flex-wrap: $wrap;
+      flex-wrap: $wrap;
 }
 
 // ===== Create Grid =====
@@ -59,29 +55,26 @@
 
   // Settings
 
-  $enable-flex: false;
-
-  $grid-container-max-width: 1470px !default;
   $grid-columns: 12 !default;
-  $grid-gutter: 1.875rem !default;
+  $grid-gutter: 20px !default;
+  $grid-container-max-width: 1470px !default;
+  $grid-container-gutter: 40px !default;
 
   $grid-breakpoints: (
-    xs: 375px,
-    sm: 640px,
-    md: 768px,
-    lg: 1025px,
-    xl: 1200px
+    sm: 600px,
+    md: 900px,
+    lg: 1200px,
+    xl: 1800px
   ) !default;
 
   // Container Elements
 
   %container-base {
-    @include tg-clearfix;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
-    padding-left: $grid-gutter;
-    padding-right: $grid-gutter;
+    padding-left: $grid-container-gutter;
+    padding-right: $grid-container-gutter;
     box-sizing: border-box;
   }
 
@@ -94,34 +87,36 @@
     @extend %container-base;
   }
 
-  .row {
-    @include tg-clearfix;
+  %row-base {
     margin-left: ($grid-gutter / -2);
     margin-right: ($grid-gutter / -2);
-    box-sizing: border-box;
+    font-size: 0;
 
-    @if $enable-flex {
-      [class^="col-"],
-      [class*=" col-"] {
-        min-height: 1px;
-      }
+    > * {
+      font-size: 1rem;
     }
   }
 
-  @if $enable-flex {
-    .flex-row {
-      @include tg-flex-display;
-      @include tg-flex(0 1 auto);
-      @include tg-flex-direction(row);
-      @include tg-flex-wrap(wrap);
-      margin-left: ($grid-gutter / -2);
-      margin-right: ($grid-gutter / -2);
-      box-sizing: border-box;
+  .row {
+    @extend %row-base;
+    box-sizing: border-box;
+  }
 
-      [class^="col-"],
-      [class*=" col-"] {
-        @include tg-flex(0 0 auto);
-        @include tg-flex-grow(1);
+  .flex-row {
+    @extend %row-base;
+    @include tg-flex-display;
+    @include tg-flex-direction(row);
+    @include tg-flex-wrap(wrap);
+    box-sizing: border-box;
+
+    > [class^="col-"],
+    > [class*=" col-"] {
+      @include tg-flex-display;
+      @include tg-flex(0 0 auto);
+      @include tg-flex-direction(column);
+
+      > * {
+        @include tg-flex(1 0 auto);
       }
     }
   }
@@ -130,35 +125,39 @@
 
   [class^="col-"],
   [class*=" col-"] {
+    display: inline-block;
+    vertical-align: top;
     width: 100%;
+    max-width: 100%;
     min-height: 1px;
-    float: left;
     padding-left: ($grid-gutter / 2);
     padding-right: ($grid-gutter / 2);
     box-sizing: border-box;
-    @if $enable-flex {
-      @include tg-flex-basis(100%);
-    }
   }
 
   // Create non-breakpoint specific columns and column offsets
   @for $i from 1 through $grid-columns {
     .col-#{$i} {
-      width: ((100% / $grid-columns) * $i);
-      @if $enable-flex {
-        @include tg-flex-basis(((100% / $grid-columns) * $i));
-      }
+      $col-width: ((100% / $grid-columns) * $i);
+
+      width: $col-width;
+      max-width: $col-width;
     }
     .col-offset-#{$i} {
-      margin-left: ((100% / $grid-columns) * $i);
+      $col-offset: ((100% / $grid-columns) * $i);
+
+      margin-left: $col-offset;
     }
   }
 
   // Create breakpoint specific columns
-  @each $breakpoint-name, $breakpoint-width in $grid-breakpoints {
+  @each $breakpoint-name in map-keys($grid-breakpoints) {
+    // Get each key's value
+    $breakpoint-width: map-get($grid-breakpoints, $breakpoint-name);
 
     // Create media query for each breakpoint
     @media (min-width: $breakpoint-width) {
+
       // Add offset-0 to reset offset in specific breakpoints
       .col-#{$breakpoint-name}-offset-0 {
         margin-left: 0;
@@ -167,13 +166,15 @@
       // Create columns and column offsets for each size in this breakpoint
       @for $i from 1 through $grid-columns {
         .col-#{$breakpoint-name}-#{$i} {
-          width: ((100% / $grid-columns) * $i);
-          @if $enable-flex {
-            @include tg-flex-basis(((100% / $grid-columns) * $i));
-          }
+          $col-width: ((100% / $grid-columns) * $i);
+
+          width: $col-width;
+          max-width: $col-width;
         }
         .col-#{$breakpoint-name}-offset-#{$i} {
-          margin-left: ((100% / $grid-columns) * $i);
+          $col-offset: ((100% / $grid-columns) * $i);
+
+          margin-left: $col-offset;
         }
       }
     }
