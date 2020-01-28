@@ -16,10 +16,10 @@ Tiny Grid uses the same markup as Bootstrap's grid to make it easy to use for ev
 
 ```html
 <div class="container">
-	<div class="row">
-		<div class="col-lg-6">This is a column</div>
-		<div class="col-lg-6">This is another column</div>
-	</div>
+  <div class="row">
+    <div class="col-lg-6">This is a column</div>
+    <div class="col-lg-6">This is another column</div>
+  </div>
 </div>
 ```
 
@@ -30,7 +30,7 @@ Container is a class to use to wrap all page content. The max-width is set by ch
 Rows should always wrap columns. This div contains negative margin to remove the padding from the outer columns.
 ```html
 <div class="row">
-	<!-- Columns goes here -->
+  <!-- Columns goes here -->
 </div>
 ```
 
