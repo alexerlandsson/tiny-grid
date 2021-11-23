@@ -4,7 +4,7 @@
   "description": "This is a lightweight CSS grid framework.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "sass": "sass ./scss/tiny-grid.scss ./css/tiny-grid.min.css --style compressed --no-source-map"
   },
   "repository": {
     "type": "git",
@@ -17,9 +17,6 @@
   },
   "homepage": "https://github.com/alexerlandsson/tiny-grid#readme",
   "devDependencies": {
-    "gulp": "^4.0.2",
-    "gulp-clean-css": "^4.2.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^4.0.2"
+    "sass": "^1.43.4"
   }
 }

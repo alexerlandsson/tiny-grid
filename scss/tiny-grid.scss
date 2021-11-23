@@ -5,6 +5,8 @@
 // and applications. For documentation, check out the GitHub repository:
 // https://github.com/alexerlandsson/tiny-grid
 
+@use 'sass:math';
+
 @mixin tiny-grid {
   // Settings
   $grid-columns: 12 !default;
@@ -39,8 +41,8 @@
   }
 
   .row {
-    margin-left: ($grid-gutter / -2);
-    margin-right: ($grid-gutter / -2);
+    margin-left: math.div($grid-gutter, -2);
+    margin-right: math.div($grid-gutter, -2);
     box-sizing: border-box;
     font-size: 0;
 
@@ -56,18 +58,18 @@
     vertical-align: top;
     width: 100%;
     min-height: 1px;
-    padding-left: ($grid-gutter / 2);
-    padding-right: ($grid-gutter / 2);
+    padding-left: math.div($grid-gutter, 2);
+    padding-right: math.div($grid-gutter, 2);
     box-sizing: border-box;
   }
 
   // Create non-breakpoint specific columns and column offsets
   @for $i from 1 through $grid-columns {
     .col-#{$i} {
-      width: ((100% / $grid-columns) * $i);
+      width: (math.div(100%, $grid-columns) * $i);
     }
     .col-offset-#{$i} {
-      margin-left: ((100% / $grid-columns) * $i);
+      margin-left: (math.div(100%, $grid-columns) * $i);
     }
   }
 
@@ -87,10 +89,10 @@
       // Create columns and column offsets for each size in this breakpoint
       @for $i from 1 through $grid-columns {
         .col-#{$breakpoint-name}-#{$i} {
-          width: ((100% / $grid-columns) * $i);
+          width: (math.div(100%, $grid-columns) * $i);
         }
         .col-#{$breakpoint-name}-offset-#{$i} {
-          margin-left: ((100% / $grid-columns) * $i);
+          margin-left: (math.div(100%, $grid-columns) * $i);
         }
       }
     }
