@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/alexerlandsson/tiny-grid#readme",
   "devDependencies": {
-    "sass": "^1.43.4"
+    "sass": "^1.51.0"
   }
 }
